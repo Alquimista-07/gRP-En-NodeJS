@@ -15,7 +15,7 @@ var morgan = require('morgan');
 // la siguiente importación.
 const cors = require('cors');
 
-// Congiguraciónes
+// Configuraciónes
 const port = 3000;
 
 // Middlewares
@@ -29,5 +29,5 @@ app.use( '/caso', require( './routes/casos' ) );
 
 // Levantar el servidor
 app.listen( port, () =>{
-    console.log('Servidor ejecutandose en el puerto: '. port);
+    console.log('Servidor ejecutandose en el puerto: ', port);
 });
