@@ -34,7 +34,7 @@ service Casos {
     //       Ahora al momento de devolver la respuesta estamos regresando una estructura y no un arreglo
     //       [{name,location, ..., state}], entonces una solución para devolver un array es stremearlo
     //       y mandar uno a la vez y para esto anteponemos la palbra reservada stream
-    rpc ListarCasos (Empty) returns (stream CasoReply);
+    rpc ListarCasos (Empty) returns (stream CasoReply){}
 }
 
 //-------------------------------------
