@@ -73,7 +73,7 @@ async function EliminarCaso(call, callback){
 
     await mysqlConnection.query(query, function(err, rows, fields) {
         if(err) throw err;
-        callback(null, {message: 'Caso insertado en la base de datos'});
+        callback(null, {message: 'Caso eliminado en la base de datos'});
     });
 
 }
