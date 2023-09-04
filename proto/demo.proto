@@ -1,0 +1,74 @@
+// NOTA: En este ejercicio básicamente lo que queremos es insertar casos de coronavirus 
+//       en una base de datos mysql.
+//       La estructura de los protobuffers son la definición de lo que vamos a transportar 
+//       entre el cliente y el servidor.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.demo";
+option java_outer_classname = "DemoProto";
+option objc_class_prefix = "HLW";
+
+package demo;
+
+// NOTA: Definición de los procedimientos remotos que vamos a tener.
+//       El servicio lo llamamos Casos
+service Casos {
+    // NOTA: Dentro  de este vamos a tener dos servicios pero se pueden crear 
+    //       cuantos sean necesarios.
+
+    // NOTA: El primero se va a llamar AddCaso y el cual va a hacer una insersión en la
+    //       BD cada vez que se le envíe la estructura de los datos JSON que se va a enviar
+    //       y los cuales están definidos dentor del testloadbalancer_loculs/lista_casos.json
+    //       La estructura que le vamos a mandar se llama CasoRequest y la respuesta que devuelve
+    //       la vamos a llamar Reply
+    rpc AddCaso (CasoRequest) returns (Reply) {}
+
+    // NOTA: Definimos un segundo procedimiento para traer data, al cual el primer parametro indica
+    //       un cuerpo pero como estamos definiendo que qeremos listar todos los casos lo mandamos
+    //       como Empty y la respuesta qu va a retornar va a ser la misma estructura que definimos en
+    //       CasoRequest ya que es la misma que estamos guardando solo que creamos una estrucuta
+    //       aparte solo por fines demostrativos y tener un orden pero hay que tener en cuenta que es
+    //       la misma.
+    //       Ahora al momento de devolver la respuesta estamos regresando una estructura y no un arreglo
+    //       [{name,location, ..., state}], entonces una solución para devolver un array es stremearlo
+    //       y mandar uno a la vez y para esto anteponemos la palbra reservada stream
+    rpc ListarCasos (Empty) returns (stream CasoReply);
+}
+
+//-------------------------------------
+// Estructuras primer procedimiento
+//-------------------------------------
+// NOTA: Definición de la estructura que vamos a transportar.
+//       A la cual se le define el tipo, el nombre del campo y la posición
+//       en la cual se ubica.
+message CasoReply {
+    string name = 1;
+    string location = 2;
+    int32 age = 3;
+    string infected_type = 4;
+    string state = 5;
+}
+
+// Definición estructura de respuesta
+message Reply {
+    string message = 1;
+}
+
+//-------------------------------------
+// Estructuras segundo procedimiento
+//-------------------------------------
+// Definición de la estructura Empty para traer todos los casos,
+// pero si quisieramos por ejemplo traer los casos de personas
+// mayores a 50 años ya que tenemos un age podríamos pasarle acá 
+// una condición
+message Empty {}
+
+message CasoRequest {
+    string name = 1;
+    string location = 2;
+    int32 age = 3;
+    string infected_type = 4;
+    string state = 5;
+}
