@@ -34,7 +34,8 @@ if (argv.target) {
   target = "localhost:50051";
 }
 
-var client = new demo_proto.Geeter(target, grpc.credentials.createInsecure());
+// Pasamos el service
+var client = new demo_proto.Casos(target, grpc.credentials.createInsecure());
 
 // Exportamos el cliente
 module.exports = client;
