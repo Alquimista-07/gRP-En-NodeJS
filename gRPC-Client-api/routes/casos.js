@@ -83,5 +83,30 @@ router.delete('/eliminar/:id', function (req, res) {
     });
 });
 
+// Ruta para eliminar un caso
+router.put('/actualizar/:id', function (req, res) {
+
+    const data_caso = {
+        id : req.params.id,
+        name : req.body.name,
+        location : req.body.location,
+        age : req.body.age,
+        infected_type : req.body.infected_type,
+        state : req.body.state
+    }
+
+    client.ActualizaCaso(data_caso, function(err, response) {
+
+        res.status(200).json({
+            ok: true,
+            name : response.name,
+            location : response.location,
+            age : response.age,
+            infected_type: response.infected_type,
+            state : response.state
+        });
+    });
+});
+
 // Exportamos
 module.exports = router;

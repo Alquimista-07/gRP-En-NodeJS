@@ -38,6 +38,9 @@ service Casos {
 
     // NOTA: Definición de procedimiento para eliminar un registro
     rpc EliminarCaso (EliminaCasoRequest) returns (ReplyEliminacionCaso) {}
+
+    // NOTA: Definición de procedimiento para actualizar un registro
+    rpc ActualizaCaso (ActualizaCasoRequest) returns (ReplyActualizaCaso) {}
 }
 
 //-------------------------------------
@@ -85,4 +88,24 @@ message EliminaCasoRequest {
 
 message ReplyEliminacionCaso {
     string message = 1;
+}
+
+//----------------------------------------
+// Estructuras procedmiento actualizar caso
+//----------------------------------------
+message ActualizaCasoRequest {
+    string id = 1;
+    string name = 2;
+    string location = 3;
+    int32 age = 4;
+    string infected_type = 5;
+    string state = 6;
+}
+
+message ReplyActualizaCaso {
+    string name = 1;
+    string location = 2;
+    int32 age = 3;
+    string infected_type = 4;
+    string state = 5;
 }

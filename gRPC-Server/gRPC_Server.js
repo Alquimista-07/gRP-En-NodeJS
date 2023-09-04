@@ -78,6 +78,18 @@ async function EliminarCaso(call, callback){
 
 }
 
+// Definición de procedimiento para actualizar un caso
+async function ActualizaCaso(call, callback){
+
+    const query = 'UPDATE Caso SET name="' + call.request.name + '", location="'+ call.request.location +'", age=' + call.request.age + ', infected_type="' + call.request.infected_type + '", state="' + call.request.state + '" WHERE id=' + call.request.id + ';';
+    
+    await mysqlConnection.query(query, function(err, rows, fields) {
+        if(err) throw err;
+        callback(null, { name: call.request.name, location: call.request.location, age: call.request.age, infected_type: call.request.infected_type, state: call.request.state});
+    });
+
+}
+
 // Inicia un RPC server que recive las peticiones para el servicio Casos
 function main(){
     // Instancia del servidor
@@ -88,7 +100,8 @@ function main(){
         // Definición de los procedimientos remotos definidos en el proto
         AddCaso: AddCaso,
         ListarCasos: ListarCasos,
-        EliminarCaso: EliminarCaso
+        EliminarCaso: EliminarCaso,
+        ActualizaCaso : ActualizaCaso
     });
     server.bindAsync('0.0.0.0:50051', grpc.ServerCredentials.createInsecure(), () => {
         server.start();
