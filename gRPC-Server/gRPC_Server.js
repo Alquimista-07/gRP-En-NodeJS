@@ -66,6 +66,18 @@ function ListarCasos(call){
 
 }
 
+// Definición de procedimiento para eliminar un caso
+async function EliminarCaso(call, callback){
+
+    const query = 'DELETE FROM Caso WHERE id=' + call.request.id + ';';
+
+    await mysqlConnection.query(query, function(err, rows, fields) {
+        if(err) throw err;
+        callback(null, {message: 'Caso insertado en la base de datos'});
+    });
+
+}
+
 // Inicia un RPC server que recive las peticiones para el servicio Casos
 function main(){
     // Instancia del servidor
@@ -75,7 +87,8 @@ function main(){
     server.addService(demo_proto.Casos.service, {
         // Definición de los procedimientos remotos definidos en el proto
         AddCaso: AddCaso,
-        ListarCasos: ListarCasos
+        ListarCasos: ListarCasos,
+        EliminarCaso: EliminarCaso
     });
     server.bindAsync('0.0.0.0:50051', grpc.ServerCredentials.createInsecure(), () => {
         server.start();

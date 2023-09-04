@@ -35,6 +35,9 @@ service Casos {
     //       [{name,location, ..., state}], entonces una solución para devolver un array es stremearlo
     //       y mandar uno a la vez y para esto anteponemos la palbra reservada stream
     rpc ListarCasos (Empty) returns (stream CasoReply){}
+
+    // NOTA: Definición de procedimiento para eliminar un registro
+    rpc EliminarCaso (EliminaCasoRequest) returns (ReplyEliminacionCaso) {}
 }
 
 //-------------------------------------
@@ -71,4 +74,15 @@ message CasoRequest {
     int32 age = 3;
     string infected_type = 4;
     string state = 5;
+}
+
+//----------------------------------------
+// Estructuras procedmiento eliminar caso
+//----------------------------------------
+message EliminaCasoRequest {
+    string id = 1;
+}
+
+message ReplyEliminacionCaso {
+    string message = 1;
 }

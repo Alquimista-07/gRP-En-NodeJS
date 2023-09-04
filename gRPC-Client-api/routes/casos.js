@@ -67,5 +67,21 @@ router.get('/listarCasos', function(rq, res) {
 
 });
 
+// Ruta para eliminar un caso
+router.delete('/eliminar/:id', function (req, res) {
+
+    const id_caso = {
+        id : req.params.id
+    }
+
+    client.EliminarCaso(id_caso, function(err, response) {
+
+        res.status(200).json({
+            ok: true,
+            mensaje: response.message
+        });
+    });
+});
+
 // Exportamos
 module.exports = router;
