@@ -27,7 +27,7 @@ router.post('/agregarCaso', function (req, res){
         // Como es una api damos la respuesta a quien realizo
         // la petición y como el Reply en el proto nos devuelve 
         // el message ese es el que mostramos
-        res.state(200).json({
+        res.status(200).json({
             ok: true,
             mensaje: response.message
         })
